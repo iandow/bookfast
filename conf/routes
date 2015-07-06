@@ -1,0 +1,34 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET         /                        controllers.Application.index
+GET         /availabilities          controllers.Application.availindex
+GET         /subscriptions           controllers.Application.subscriptionindex
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file            controllers.Assets.at(path="/public", file)
+
+GET         /sites                   controllers.SitesController.index
+
+POST        /sites                   controllers.SitesController.save
+
+GET         /sites/add               controllers.SitesController.add
+
+GET         /sites/:id               controllers.SitesController.show(id: Int)
+POST        /sites/:id               controllers.SitesController.update(id: Int)
+GET         /sites/:id/edit          controllers.SitesController.edit(id: Int)
+POST        /sites/:id/delete        controllers.SitesController.delete(id: Int)
+
+GET         /availabilities                   controllers.AvailabilitiesController.index
+POST        /availabilities                   controllers.AvailabilitiesController.save
+GET         /availabilities/add               controllers.AvailabilitiesController.add
+GET         /availabilities/:id               controllers.AvailabilitiesController.show(id: Int)
+POST        /availabilities/:id/delete        controllers.AvailabilitiesController.delete(id: Int)
+
+GET         /subscriptions                   controllers.SubscriptionsController.index
+POST        /subscriptions                   controllers.SubscriptionsController.save
+GET         /subscriptions/add               controllers.SubscriptionsController.add(parkId: Int, name: String)
+GET         /subscriptions/:id               controllers.SubscriptionsController.show(id: Int)
+POST        /subscriptions/:id/delete        controllers.SubscriptionsController.delete(id: Int)

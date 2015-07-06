@@ -1,0 +1,10 @@
+@(subscription: Subscription)
+
+@import helper._
+@import models.Subscription
+
+@main(subscription.phone) {
+  <h1>Name: "@subscription.phone"</h1>
+  <h1>Name: "@subscription.date"</h1>
+  <h1>Name: "@subscription.parkid"</h1>
+}

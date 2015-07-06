@@ -1,0 +1,28 @@
+@(sites: List[Site])
+
+@main("Listing sites") {
+	<div class="container">
+	    <h1>Sites: @sites.length </h1>
+	    <a href="@routes.SitesController.add" class="btn btn-primary">Add Site</a>
+	    <table class="table table-striped">
+		    <thead>
+		    	<tr>
+					<th>Name</th>
+					<th>ParkID</th>
+		    	</tr>
+		    </thead>
+			<tbody>
+				@for(site <- sites) {
+				<tr>
+					<td>@site.name</td>
+                    <td>@site.parkid</td>
+						@site.id.map { id =>
+							<td><a href="@routes.SubscriptionsController.add(site.parkid, site.name)" class="btn btn-info" type="submit">Subscribe</button></td>
+							<td>@helper.form(routes.SitesController.delete(id)){<button class="btn btn-danger" type="submit">Delete</button>}</li></td>
+						}
+				</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+}

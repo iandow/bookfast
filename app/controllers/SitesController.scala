@@ -1,0 +1,51 @@
+package controllers
+
+import scala.concurrent._
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
+
+import play.api._
+import play.api.mvc._
+import play.api.data._
+import play.api.data.Forms._
+import play.api.Play.current
+import scala.slick.driver.PostgresDriver.simple._
+import models.Site
+import models.Sites
+
+
+object SitesController extends Controller {
+	val siteForm = Form(
+	    mapping(
+	        "name" -> text,
+	        "id" -> optional(number),
+          "parkid" -> number
+	)(Site.apply)(Site.unapply))
+  	def index = Action {
+		  Ok(views.html.sites.index(Sites.all))
+	}
+	def show(id:Int) = Action {
+		Ok(views.html.sites.show(Sites.find(id)))
+	}
+	def add = Action {
+	    Ok(views.html.sites.add(siteForm))
+	}
+	def save = Action{implicit request =>
+		val site = siteForm.bindFromRequest.get
+    Sites.create(site)
+		Redirect(routes.Application.index)
+	}
+	def edit(id:Int) = Action {
+		Ok(views.html.sites.edit(id, siteForm.fill(Sites.find(id))))
+	}
+	def update(updateid: Int) = Action {implicit request =>
+		val site = siteForm.bindFromRequest.get
+		val newsite = site.copy(id = Some(updateid))
+    Sites.update(newsite)
+		Redirect(routes.Application.index)
+	}
+	def delete(id: Int) = Action {implicit request =>
+    Sites.delete(id)
+		Redirect(routes.Application.index)
+	}
+
+}

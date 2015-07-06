@@ -1,0 +1,26 @@
+@(subscriptions: List[Subscription])
+
+@main("Listing subscriptions") {
+	<div class="container">
+	    <h1>Subscriptions: @subscriptions.length </h1>
+	    <table class="table table-striped">
+		    <thead>
+		    	<tr>
+					<th>Phone</th>
+					<th>ParkID</th>
+		    	</tr>
+		    </thead>
+			<tbody>
+				@for(subscription <- subscriptions) {
+				<tr>
+					<td>@subscription.phone</td>
+                    <td>@subscription.parkid</td>
+						@subscription.id.map { id =>
+							<td>@helper.form(routes.SubscriptionsController.delete(id)){<button class="btn btn-danger" type="submit">Delete</button>}</li></td>
+						}
+				</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+}
