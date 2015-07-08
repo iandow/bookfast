@@ -21,11 +21,15 @@
         <tr>
 
             @for(day <- biweek) {
-                @if(day.text() == "R") {
-                            <td class="danger">
-                        } else {
-                            <td class = "success">
-                        }
+                @if(day.text() == "X") {
+                    <td class="danger">
+                } else { @if(day.text() == "A") {
+                    <td class = "success">
+                } else {
+                    <td>
+                }
+                }
+
                 @day.text()
                 </td>
             }
