@@ -32,3 +32,5 @@ POST        /subscriptions                   controllers.SubscriptionsController
 GET         /subscriptions/add               controllers.SubscriptionsController.add(parkId: Int, name: String)
 GET         /subscriptions/:id               controllers.SubscriptionsController.show(id: Int)
 POST        /subscriptions/:id/delete        controllers.SubscriptionsController.delete(id: Int)
+
+GET         /recreation                     controllers.Application.recreation

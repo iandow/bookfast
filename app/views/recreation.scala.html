@@ -1,0 +1,35 @@
+@import org.joda.time.DateTime
+@import org.jsoup.Jsoup
+@import org.jsoup.select.Elements
+
+@(date: DateTime, biweek: Elements)
+@import org.joda.time.format.DateTimeFormatter
+@import org.joda.time.format.DateTimeFormat
+
+@main("Recreation data") {
+
+	<div class="container">
+        <h3>Status for the two week period starting on @date.toString("MM/dd/yyyy"):</h3>
+        <table class="table table-striped">
+        <tr>
+            @for(i <- 0 to biweek.size()-1) {
+                <td>
+                @date.plusDays(i).dayOfWeek().getAsShortText()<br>
+                @date.plusDays(i).toString("MM/dd")
+                </td>
+            }
+        <tr>
+
+            @for(day <- biweek) {
+                @if(day.text() == "R") {
+                            <td class="danger">
+                        } else {
+                            <td class = "success">
+                        }
+                @day.text()
+                </td>
+            }
+        </tr>
+        </table>
+	</div>
+}
