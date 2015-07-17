@@ -28,6 +28,7 @@ object AvailabilitiesController extends Controller {
 		Ok(views.html.availabilities.show(Availabilities.find(id)))
 	}
 	def add = Action {
+
 	    Ok(views.html.availabilities.add(availabilityForm))
 	}
 	def save = Action{implicit request =>

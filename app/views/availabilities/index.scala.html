@@ -3,18 +3,19 @@
 @main("Listing availabilties") {
 	<div class="container">
 	    <h1>Availabilities: @availabilities.length </h1>
-	    <a href="@routes.AvailabilitiesController.add" class="btn btn-primary">Add Availability</a>
 	    <table class="table table-striped">
 		    <thead>
 		    	<tr>
 					<th>Name</th>
 					<th>Date</th>
+					<th>ParkId</th>
 		    	</tr>
 		    </thead>
 			<tbody>
 				@for(availability <- availabilities) {
 				<tr>
 					<td>@availability.name</td>
+					<td>@availability.date</td>
                     <td>@availability.parkid</td>
 						@availability.id.map { id =>
 							<td>@helper.form(routes.AvailabilitiesController.delete(id)){<button class="btn btn-danger" type="submit">Delete</button>}</li></td>

@@ -27,9 +27,15 @@ object Availabilities {
 	def create(newavailability: Availability) = db.withTransaction{ implicit session =>
 		availability += newavailability
 	}
-	def find(parkId: Int): Availability = db.withSession{ implicit session =>
-		availability.filter(_.id === parkId).first
+	def find(parkid: Int): Availability = db.withSession{ implicit session =>
+		availability.filter(_.parkid === parkid).first
 	}
+  def find(date: String): Option[Availability] = db.withSession{ implicit session =>
+    availability.filter(_.date === date).firstOption
+	}
+  def find(date: String, parkid: Int): Option[Availability] = db.withSession { implicit session =>
+    availability.filter(a => a.date === date && a.parkid === parkid).firstOption
+  }
 	def update(updateAvailability: Availability) = db.withTransaction{ implicit session =>
 		availability.filter(_.id === updateAvailability.id).update(updateAvailability)
 	}
