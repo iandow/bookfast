@@ -42,4 +42,7 @@ object Availabilities {
 	def delete(id: Int) = db.withTransaction{ implicit session =>
 		availability.filter(_.id === id).delete
 	}
+  def delete(date: String, parkid: Int) = db.withSession { implicit session =>
+      availability.filter(a => a.date === date && a.parkid === parkid).delete
+  }
 }
