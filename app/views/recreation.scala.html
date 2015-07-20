@@ -29,62 +29,26 @@
                 </td>
             }
         </tr>
-        <tr>
 
-        @for(day <- biweek) {
-            @{day.text() match {
-                case "X" => {
-                    <td class = "warning">{day.text()}</td>
-                }
-                case "A" => {
-                    <td class = "success">{day.text()}</td>
-                }
-                case "a" => {
-                    <td class = "warning">{day.text()}</td>
-                }
-                case "R" => {
-                    <td>{day.text()}</td>
-                }
-                case _ => {
-                    <td class = "info"> {day.text()} </td>
-                }
-            }
-        }
-
-        }
-        </tr>
         <tr>
             @for(i <- 14 to biweek2.size()+14-1) {
-                <td>
+
+                @if(biweek2.eq(i-14).text() == "X") {<td class = "info">}
+                @if(biweek2.eq(i-14).text() == "A") {<td class = "success">}
+                @if(biweek2.eq(i-14).text() == "a") {<td class = "warning">}
+                @if(biweek2.eq(i-14).text() == "R") {<td>}
+                @if(biweek2.eq(i-14).text() == "N") {<td class = "info">}
+
                     @if(date.plusDays(i).dayOfWeek().getAsShortText() == "Sat" || date.plusDays(i).dayOfWeek().getAsShortText() == "Sun") { <b> }
                         @date.plusDays(i).dayOfWeek().getAsShortText()<br>
                         @date.plusDays(i).toString("MM/dd")
                     @if(date.plusDays(i).dayOfWeek().getAsShortText() == "Sat" || date.plusDays(i).dayOfWeek().getAsShortText() == "Sun") { </b> }
+                <br>@{biweek2.eq(i-14).text()}
                 </td>
             }
         </tr>
-        <tr>
 
-        @for(day <- biweek2) {
-            @{day.text() match {
-                case "X" => {
-                    <td class = "warning">{day.text()}</td>
-                }
-                case "A" => {
-                    <td class = "success">{day.text()}</td>
-                }
-                case "a" => {
-                    <td class = "warning">{day.text()}</td>
-                }
-                case "R" => {
-                    <td>{day.text()}</td>
-                }
-                case _ => {
-                    <td class = "info"> {day.text()} </td>
-                }
-            }
-        }
-        }
+
         </table>
 	</div>
 }
