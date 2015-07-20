@@ -15,9 +15,12 @@
         <tr>
             @for(i <- 0 to biweek.size()-1) {
 
+                @if(biweek.eq(i).text() == "X") {<td class = "info">}
+                @if(biweek.eq(i).text() == "A") {<td class = "success">}
+                @if(biweek.eq(i).text() == "a") {<td class = "warning">}
+                @if(biweek.eq(i).text() == "R") {<td>}
+                @if(biweek.eq(i).text() == "N") {<td class = "info">}
 
-
-                <td>
                     @if(date.plusDays(i).dayOfWeek().getAsShortText() == "Sat" || date.plusDays(i).dayOfWeek().getAsShortText() == "Sun") { <b> }
                         @date.plusDays(i).dayOfWeek().getAsShortText()<br>
                         @date.plusDays(i).toString("MM/dd")
@@ -47,6 +50,7 @@
                 }
             }
         }
+
         }
         </tr>
         <tr>

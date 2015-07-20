@@ -7,30 +7,12 @@ import scala.collection.JavaConversions._
 import com.twilio.sdk.TwilioRestClient
 import com.twilio.sdk.resource.factory.SmsFactory
 import com.twilio.sdk.resource.instance.Sms
-import com.twilio.sdk.client.TwilioCapability
-import com.twilio.sdk.resource.factory.MessageFactory;
-import com.twilio.sdk.resource.instance.Message;
-import com.twilio.sdk.resource.factory.SmsFactory
-import com.twilio.sdk.resource.instance.Sms
 import play.api.Logger
-import akka.actor.ActorSystem
-import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import org.jsoup
 import org.jsoup.Jsoup
-import org.jsoup.nodes.TextNode
-
 import play.api.mvc._
-import play.api.data._
-import play.api.data.Forms._
-import play.api.Play.current
-import scala.concurrent.duration.Duration
-import scala.slick.driver.PostgresDriver.simple._
-import models.Site
 import models.Sites
-import models.Availability
 import models.Availabilities
-import models.Subscription
 import models.Subscriptions
 
 object Application extends Controller {
@@ -69,18 +51,18 @@ object Application extends Controller {
 //      dailystatus[i] = element.owntext()
 //    }
 
-    Logger.info("Sending SMS")
-    val sid = "ACe591ba06f233fcdc6f63143a75419fa7"
-    val token = "4c804fa47f98f2e8f214235db20481c6"
-    val msg = "hello"
-    val to = "202-507-9070"
-    val from = "503-278-4693"
-    val client = new TwilioRestClient(sid, token)
-    val params= Map(("Body", msg), ("To", to), ("From", from))
-
-    val messageFactory: SmsFactory = client.getAccount.getSmsFactory
-    val message: Sms = messageFactory.create(params)
-    System.out.println(message.getSid());
+//    Logger.info("Sending SMS")
+//    val sid = "ACe591ba06f233fcdc6f63143a75419fa7"
+//    val token = "4c804fa47f98f2e8f214235db20481c6"
+//    val msg = "hello"
+//    val to = "202-507-9070"
+//    val from = "503-278-4693"
+//    val client = new TwilioRestClient(sid, token)
+//    val params= Map(("Body", msg), ("To", to), ("From", from))
+//
+//    val messageFactory: SmsFactory = client.getAccount.getSmsFactory
+//    val message: Sms = messageFactory.create(params)
+//    System.out.println(message.getSid());
 
 
 

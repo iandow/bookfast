@@ -33,7 +33,7 @@ object HelloAkkaScala extends App {
 
     // Wait 5 seconds for the reply with the 'greeting' message
     val Greeting(message1) = inbox.receive(new FiniteDuration(5,duration.SECONDS))
-    println(s"Akka got her result: $message1")
+    //println(s"Akka got her result: $message1")
 
     val greetPrinter = system.actorOf(Props[GreetPrinter])
 
