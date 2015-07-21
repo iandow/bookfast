@@ -4,12 +4,10 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 
 import scala.collection.JavaConversions._
-import com.twilio.sdk.TwilioRestClient
-import com.twilio.sdk.resource.factory.SmsFactory
-import com.twilio.sdk.resource.instance.Sms
 import play.api.Logger
 import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
+import org.jsoup.select.Elements
 import play.api.mvc._
 import models.Sites
 import models.Availabilities
@@ -29,44 +27,54 @@ object Application extends Controller {
   }
 
   def recreation = Action {
-    val parkid = "75098";
+    var parkid = "75098";
     val formatter = DateTimeFormat.forPattern("MM/dd/yyyy")
     val today = Calendar.getInstance().getTime()
-//    val date = formatter.parseDateTime("1/18/2016")
     val format1 = new SimpleDateFormat("MM/dd/yyyy");
     val date2 = format1.format(today)
     val date = formatter.parseDateTime(date2.toString()).plusMonths(6).minusWeeks(1)
-    val url = "http://www.recreation.gov/campsiteCalendar.do?page=matrix&calarvdate="+date.toString("MM/dd/yyyy")+"&contractCode=NRSO&parkId="+parkid
+    var url = "http://www.recreation.gov/campsiteCalendar.do?page=matrix&calarvdate="+date.toString("MM/dd/yyyy")+"&contractCode=NRSO&parkId="+parkid
     //System.out.println(url)
-    val doc = Jsoup.connect(url).userAgent("Mozilla/5.0").timeout(5000).get()
-
-//    System.out.println(doc.body().toString());
-    val biweek = doc.select("td[class^=status")
-
-    val doc2 = Jsoup.connect("http://www.recreation.gov/campsiteCalendar.do?page=matrix&calarvdate="+date.plusDays(14).toString("MM/dd/yyyy")+"&contractCode=NRSO&parkId="+parkid).userAgent("Mozilla/5.0").timeout(5000).get()
-    val biweek2 = doc2.select("td[class^=status")
-
-//    var dailystatus = new Array[String](14)
-//    for (element <- calendar_elements) {
-//      dailystatus[i] = element.owntext()
-//    }
-
-//    Logger.info("Sending SMS")
-//    val sid = "ACe591ba06f233fcdc6f63143a75419fa7"
-//    val token = "4c804fa47f98f2e8f214235db20481c6"
-//    val msg = "hello"
-//    val to = "202-507-9070"
-//    val from = "503-278-4693"
-//    val client = new TwilioRestClient(sid, token)
-//    val params= Map(("Body", msg), ("To", to), ("From", from))
-//
-//    val messageFactory: SmsFactory = client.getAccount.getSmsFactory
-//    val message: Sms = messageFactory.create(params)
-//    System.out.println(message.getSid());
+    var doc = Jsoup.connect(url).userAgent("Mozilla/5.0").timeout(5000).get()
+    var biweek = doc.select("td[class^=status")
+    var doc2 = Jsoup.connect("http://www.recreation.gov/campsiteCalendar.do?page=matrix&calarvdate="+date.plusDays(14).toString("MM/dd/yyyy")+"&contractCode=NRSO&parkId="+parkid).userAgent("Mozilla/5.0").timeout(5000).get()
+    var biweek2 = doc2.select("td[class^=status")
+    val biweekArray = new Array[Elements](3)
+    biweekArray(0) = biweek
+    val biweek2Array = new Array[Elements](3)
+    biweek2Array(0) = biweek2
+    val sitenames = new Array[String](3)
+    sitenames(0) = "File Mile Butte"
+    val parkurls = new Array[String](3)
+    parkurls(0) = url
 
 
 
-    Ok(views.html.recreation(date, biweek, biweek2))
+    parkid = "75097";
+    url = "http://www.recreation.gov/campsiteCalendar.do?page=matrix&calarvdate="+date.toString("MM/dd/yyyy")+"&contractCode=NRSO&parkId="+parkid
+    //System.out.println(url)
+    doc = Jsoup.connect(url).userAgent("Mozilla/5.0").timeout(5000).get()
+    biweek = doc.select("td[class^=status")
+    doc2 = Jsoup.connect("http://www.recreation.gov/campsiteCalendar.do?page=matrix&calarvdate="+date.plusDays(14).toString("MM/dd/yyyy")+"&contractCode=NRSO&parkId="+parkid).userAgent("Mozilla/5.0").timeout(5000).get()
+    biweek2 = doc2.select("td[class^=status")
+    biweekArray(1) = biweek
+    biweek2Array(1) = biweek2
+    sitenames(1) = "Clear Lake Cabin"
+    parkurls(1) = url
+
+    parkid = "75099";
+    url = "http://www.recreation.gov/campsiteCalendar.do?page=matrix&calarvdate="+date.toString("MM/dd/yyyy")+"&contractCode=NRSO&parkId="+parkid
+    //System.out.println(url)
+    doc = Jsoup.connect(url).userAgent("Mozilla/5.0").timeout(5000).get()
+    biweek = doc.select("td[class^=status")
+    doc2 = Jsoup.connect("http://www.recreation.gov/campsiteCalendar.do?page=matrix&calarvdate="+date.plusDays(14).toString("MM/dd/yyyy")+"&contractCode=NRSO&parkId="+parkid).userAgent("Mozilla/5.0").timeout(5000).get()
+    biweek2 = doc2.select("td[class^=status")
+    biweekArray(2) = biweek
+    biweek2Array(2) = biweek2
+    sitenames(2) = "Flag Point Lookout"
+    parkurls(2) = url
+
+    Ok(views.html.recreation(date, sitenames, parkurls, biweekArray, biweek2Array))
 // 		Ok(views.html.recreation(doc.select("td[class^=status").toString))
 // 		Ok(views.html.recreation(doc.select("td[class=status r]").toString))
  	}
