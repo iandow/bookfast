@@ -3,18 +3,17 @@ package models
 import scala.slick.driver.PostgresDriver.simple._
 import play.api.Play.current
 import play.api.data.Forms._
-case class Subscription(phone: String, date: String, parkid: Int, id: Option[Int] = None)
+case class Subscription(phone: String, parkid: Int, id: Option[Int] = None)
 
 class Subscriptions(tag: Tag) extends Table[Subscription](tag, "SUBSCRIPTIONS") {
   // Auto Increment the id primary key column
   def id = column[Int]("ID", O.PrimaryKey, O.AutoInc)
   // The name can't be null
   def phone = column[String]("PHONE", O.NotNull)
-  def date = column[String]("DATE")
   def parkid = column[Int]("PARKID", O.NotNull)
   // the * projection (e.g. select * ...) auto-transforms the tupled
   // column values to / from a User
-  def * = (phone, date, parkid, id.?) <> (Subscription.tupled, Subscription.unapply)
+  def * = (phone, parkid, id.?) <> (Subscription.tupled, Subscription.unapply)
 }
 
 object Subscriptions {
@@ -26,9 +25,15 @@ object Subscriptions {
 	def create(newsubscription: Subscription) = db.withTransaction{ implicit session =>
     subscriptions += newsubscription
 	}
-	def find(phone: Int): Subscription = db.withSession{ implicit session =>
-    subscriptions.filter(_.id === phone).first
+  def find(subscription: Subscription): Option[Subscription] = db.withSession { implicit session =>
+    subscriptions.filter(a=> a.parkid === subscription.parkid && a.phone === subscription.phone).firstOption
+  }
+	def find(id: Int): Subscription = db.withSession{ implicit session =>
+    subscriptions.filter(_.id === id).first
 	}
+  def findlist(parkid: Int): List[Subscription] = db.withSession{ implicit session =>
+    subscriptions.filter(_.parkid === parkid).list
+  }
 	def update(updateSubscription: Subscription) = db.withTransaction{ implicit session =>
     subscriptions.filter(_.id === updateSubscription.id).update(updateSubscription)
 	}

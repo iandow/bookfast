@@ -10,7 +10,6 @@
 	  <h1>Add a new Subscription for @name</h1>
 	  	  @form(routes.SubscriptionsController.save) {
 		      @inputText(subscriptionForm("phone"))
-		      @inputText(subscriptionForm("date"))
               @inputText(subscriptionForm("parkid"))
 		      <button type="submit" class="btn btn-primary">Save</button>
 		  }

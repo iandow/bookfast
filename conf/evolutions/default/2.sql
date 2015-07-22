@@ -1,0 +1,3 @@
+# --- !Ups
+
+ALTER TABLE "SUBSCRIPTIONS" DROP "DATE";

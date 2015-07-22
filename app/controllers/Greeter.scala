@@ -41,9 +41,8 @@ class Greeter extends Actor {
     val from = "503-278-4693"
     val client = new TwilioRestClient(sid, token)
     val params2 = new util.ArrayList[NameValuePair]()
-    params2.add(new BasicNameValuePair("To", to));
     params2.add(new BasicNameValuePair("From", from));
-
+    val messageFactory: SmsFactory = client.getAccount.getSmsFactory
 
     for(site <- sites) {
 
@@ -67,21 +66,25 @@ class Greeter extends Actor {
         if (day.text() == "A" || day.text() == "a") {
           val size = Availabilities.all.size
           val d = date.plusDays(i).toString("MM/dd/yyyy")
-          val record = Availabilities.find(d, site.parkid.toInt)
+          val record = Availabilities.find(d, site.parkid)
 
           if (size == 0 || record == None) {
-            val a = Availability(site.name, d, site.parkid.toInt)
+            val a = Availability(site.name, d, site.parkid)
             Availabilities.create(a)
 
-            // Send SMS message thru Twilio
+            // Send SMS message thru Twilio to every subscriber to sites.parkid
             val msg = site.name + " is available for " + d
-            Logger.info("Sending SMS: " + msg)
+            val subscribers = Subscriptions.findlist(site.parkid)
             params2.add(new BasicNameValuePair("Body", msg));
-            val messageFactory: SmsFactory = client.getAccount.getSmsFactory
-            val message: Sms = messageFactory.create(params2)
+            for (subscriber <- subscribers) {
+              Logger.info("Sending SMS to " + subscriber.phone)
+              params2.add(new BasicNameValuePair("To", subscriber.phone));
+              messageFactory.create(params2)
+            }
           }
 
         } else if (day.text() != "A" && day.text() != "a") {
+
           val d = date.plusDays(i).toString("MM/dd/yyyy")
           val record = Availabilities.find(d, site.parkid.toInt)
           if (record != None) {
@@ -89,10 +92,14 @@ class Greeter extends Actor {
 
             // Send SMS message thru Twilio
             val msg = site.name + " has been reserved for " + d
-            Logger.info("Sending SMS: " + msg)
+            val subscribers = Subscriptions.findlist(site.parkid)
             params2.add(new BasicNameValuePair("Body", msg));
-            val messageFactory: SmsFactory = client.getAccount.getSmsFactory
-            val message: Sms = messageFactory.create(params2)
+            for (subscriber <- subscribers) {
+              Logger.info("Sending SMS: " + msg)
+              params2.add(new BasicNameValuePair("To", subscriber.phone));
+              messageFactory.create(params2)
+            }
+
           }
         }
       }

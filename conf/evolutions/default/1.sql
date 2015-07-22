@@ -11,4 +11,3 @@ create table "SUBSCRIPTIONS" ("PHONE" VARCHAR(254) NOT NULL,"DATE" VARCHAR(254) 
 # drop table "SUBSCRIPTIONS";
 # drop table "SITES";
 # drop table "AVAILABILITIES";
-
