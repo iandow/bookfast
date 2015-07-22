@@ -31,12 +31,9 @@ object HelloAkkaScala extends App {
     // Reply should go to the "actor-in-a-box"
     inbox.send(greeter, Greet)
 
-    // Wait 5 seconds for the reply with the 'greeting' message
-    val Greeting(message1) = inbox.receive(new FiniteDuration(5,duration.SECONDS))
-    //println(s"Akka got her result: $message1")
-
+    // Wait 900 seconds for the reply with the 'greeting' message
+    val Greeting(message1) = inbox.receive(new FiniteDuration(900,duration.SECONDS))
     val greetPrinter = system.actorOf(Props[GreetPrinter])
-
 
     // after zero seconds, send a Greet message every second to the greeter with a sender of the greetPrinter
     system.scheduler.schedule(new FiniteDuration(0, duration.SECONDS), new FiniteDuration(900, duration.SECONDS), greeter, Greet)(system.dispatcher, greetPrinter)
