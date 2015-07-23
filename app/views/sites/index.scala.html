@@ -14,7 +14,7 @@
 			<tbody>
 				@for(site <- sites) {
 				<tr>
-					<td><a href="@routes.Application.recreation2(site.parkid)">@site.name</a></td>
+					<td><a href="@routes.Application.showsite(site.parkid)">@site.name</a></td>
                     <td>@site.parkid</td>
 						@site.id.map { id =>
 							<td><a href="@routes.SubscriptionsController.add(site.parkid, site.name)" class="btn btn-info" type="submit">Subscribe</button></td>

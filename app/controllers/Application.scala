@@ -26,7 +26,7 @@ object Application extends Controller {
     Ok(views.html.subscriptions.index(Subscriptions.all))
   }
 
-  def recreation = Action {
+  def showsites = Action {
     var sites = Sites.all
     val formatter = DateTimeFormat.forPattern("MM/dd/yyyy")
     val today = Calendar.getInstance().getTime()
@@ -62,11 +62,9 @@ object Application extends Controller {
     }
 
     Ok(views.html.recreation(date, sitenames, parkurls, biweekArray, biweek2Array))
-// 		Ok(views.html.recreation(doc.select("td[class^=status").toString))
-// 		Ok(views.html.recreation(doc.select("td[class=status r]").toString))
  	}
 
-  def recreation2(parkid: Int) = Action {
+  def showsite(parkid: Int) = Action {
       var site = Sites.find(parkid)
 
       val formatter = DateTimeFormat.forPattern("MM/dd/yyyy")
