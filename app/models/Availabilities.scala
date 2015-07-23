@@ -22,7 +22,7 @@ object Availabilities {
 	val db = play.api.db.slick.DB
 	val availability = TableQuery[Availabilities]
 	def all: List[Availability] = db.withSession { implicit session =>
-		availability.sortBy(_.id.asc.nullsFirst).list
+		availability.sortBy(_.date.asc.nullsFirst).list
 	}
 	def create(newavailability: Availability) = db.withTransaction{ implicit session =>
 		availability += newavailability

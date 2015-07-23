@@ -34,3 +34,4 @@ GET         /subscriptions/:id               controllers.SubscriptionsController
 POST        /subscriptions/:id/delete        controllers.SubscriptionsController.delete(id: Int)
 
 GET         /recreation                     controllers.Application.recreation
+GET         /recreation2                    controllers.Application.recreation2(id: Int)

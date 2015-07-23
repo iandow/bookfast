@@ -11,9 +11,7 @@ import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 import play.api.mvc._
-import models.Sites
-import models.Availabilities
-import models.Subscriptions
+import models.{Site, Sites, Availabilities, Subscriptions}
 
 object Application extends Controller {
   def index = Action {
@@ -67,5 +65,45 @@ object Application extends Controller {
 // 		Ok(views.html.recreation(doc.select("td[class^=status").toString))
 // 		Ok(views.html.recreation(doc.select("td[class=status r]").toString))
  	}
+
+  def recreation2(parkid: Int) = Action {
+      var site = Sites.find(parkid)
+
+      val formatter = DateTimeFormat.forPattern("MM/dd/yyyy")
+      val today = Calendar.getInstance().getTime()
+      val format1 = new SimpleDateFormat("MM/dd/yyyy");
+      val date2 = format1.format(today)
+      val date = formatter.parseDateTime(date2.toString()).plusMonths(6).minusWeeks(1)
+      var i = 0
+      val sitenames = new Array[String](1)
+      val parkurls = new Array[String](1)
+      val biweekArray = new Array[Elements](1)
+      val biweek2Array = new Array[Elements](1)
+
+
+        var url = "http://www.recreation.gov/campsiteCalendar.do?page=matrix&calarvdate="+date.toString("MM/dd/yyyy")+"&contractCode=NRSO&parkId="+site.parkid
+        var url2 = "http://www.recreation.gov/campsiteCalendar.do?page=matrix&calarvdate=" + date.plusDays(14).toString("MM/dd/yyyy") + "&contractCode=NRSO&parkId=" + site.parkid
+        //System.out.println(url)
+        var doc, doc2 = new Document("")
+        try {
+          doc = Jsoup.connect(url).userAgent("Mozilla/5.0").timeout(Play.current.configuration.getInt("httptimeout").getOrElse(0)).get()
+          doc2 = Jsoup.connect(url2).userAgent("Mozilla/5.0").timeout(Play.current.configuration.getInt("httptimeout").getOrElse(0)).get()
+        } catch {
+          case e: SocketTimeoutException => Logger.warn("Socket timeout exception");
+          case e: Exception => Logger.error("exception caught: " + e);
+        }
+        val biweek = doc.select("td[class^=status")
+        val biweek2 = doc2.select("td[class^=status")
+
+        biweekArray(0) = biweek
+        biweek2Array(0) = biweek2
+        sitenames(0) = site.name
+        parkurls(0) = url
+
+
+      Ok(views.html.recreation(date, sitenames, parkurls, biweekArray, biweek2Array))
+  // 		Ok(views.html.recreation(doc.select("td[class^=status").toString))
+  // 		Ok(views.html.recreation(doc.select("td[class=status r]").toString))
+   	}
 
 }

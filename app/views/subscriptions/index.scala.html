@@ -1,5 +1,7 @@
 @(subscriptions: List[Subscription])
 
+@import models.Sites
+
 @main("Listing subscriptions") {
 	<div class="container">
 	    <h1>Subscriptions: @subscriptions.length </h1>
@@ -7,19 +9,21 @@
 		    <thead>
 		    	<tr>
 					<th>Phone</th>
-					<th>ParkID</th>
+					<th>Site Name</th>
 		    	</tr>
 		    </thead>
 			<tbody>
 				@for(subscription <- subscriptions) {
+
 				<tr>
 					<td>@subscription.phone</td>
-                    <td>@subscription.parkid</td>
+                    <td>@Sites.find(subscription.parkid).name</td>
 						@subscription.id.map { id =>
 							<td>@helper.form(routes.SubscriptionsController.delete(id)){<button class="btn btn-danger" type="submit">Delete</button>}</li></td>
 						}
 				</tr>
 				}
+
 			</tbody>
 		</table>
 	</div>

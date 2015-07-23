@@ -26,7 +26,7 @@ object Sites {
 		sites += newsite
 	}
 	def find(parkid: Int): Site = db.withSession{ implicit session =>
-		sites.filter(_.id === parkid).first
+		sites.filter(_.parkid === parkid).first
 	}
 	def update(updateSite: Site) = db.withTransaction{ implicit session =>
 		sites.filter(_.id === updateSite.id).update(updateSite)
