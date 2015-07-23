@@ -20,6 +20,7 @@ libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "2.2.4" % "test",
   "junit" % "junit" % "4.12" % "test",
   "com.twilio.sdk" % "twilio-java-sdk" % "3.4.1",
+  "org.twitter4j" % "twitter4j-stream" % "4.0.4",
   "com.novocode" % "junit-interface" % "0.11" % "test"
 )
 
