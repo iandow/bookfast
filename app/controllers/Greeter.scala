@@ -106,8 +106,11 @@ class Greeter extends Actor {
             if (record != None) {
               Availabilities.delete(d, site.parkid.toInt)
 
+              var msg = site.name + " is not longer available for " + d
               // Send SMS message to subscribers
-              val msg = site.name + " has been reserved for " + d
+              if (day.text() == "R") {
+                msg = site.name + " has been reserved for " + d
+              }
               val subscribers = Subscriptions.findlist(site.parkid)
               params2.add(new BasicNameValuePair("Body", msg));
               for (subscriber <- subscribers) {
