@@ -75,6 +75,15 @@ class Greeter extends Actor {
 
         biweek.addAll(biweek2)
 
+        // Stop keeping track of dates that are earlier than today + 6 months
+        var avails = Availabilities.all
+        for (x <- avails) {
+          if (formatter.parseDateTime(x.date).isBefore(date.getMillis())) {
+            Availabilities.delete(x.date, x.parkid)
+          }
+        }
+
+        // keep state on availabilities
         for ((day, i) <- biweek.asScala.zipWithIndex) {
           if (day.text() == "A" || day.text() == "a") {
             val size = Availabilities.all.size
