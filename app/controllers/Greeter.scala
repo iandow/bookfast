@@ -76,7 +76,7 @@ class Greeter extends Actor {
         biweek.addAll(biweek2)
 
         // Stop keeping track of dates that are earlier than today + 6 months
-        var avails = Availabilities.all
+        val avails = Availabilities.all
         for (x <- avails) {
           if (formatter.parseDateTime(x.date).isBefore(date.getMillis())) {
             Availabilities.delete(x.date, x.parkid)
