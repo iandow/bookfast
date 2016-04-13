@@ -5,13 +5,13 @@ This application makes it easier to know when campsites, yurts, cabins, etc beco
 recreation.gov. For those sites which are in high demand, this application can be useful to ensure you're the first
 one to know when new dates are made available to be reserved.
 
-# How does this application work?
+## How does this application work?
 Periodically, this application will screen scrape the availability calendars for the desired sites on recreation.gov. 
 It uses that information to keep track of when dates open up and when reservations have been made. 
 
 This application provides a user interface to view availability dates, and subscribe to be notified by SMS instant message when dates open up.
   
-Availabilities will also be announced on the @mthoodlookouts Twitter account, so rather than subscribe to SMS 
+Availabilities will also be announced on the [@mthoodlookouts](http://twitter.com/mthoodlookouts) Twitter account, so rather than subscribe to SMS 
 notifications, users can simply subscribe to notifications to that Twitter account (those notifications would be
 done within the Twitter app).
 
@@ -22,7 +22,7 @@ Database manipulation is handled by Slick connected to PostgreSQL, which is used
 Heroku is used for hosting the application.  
 
 
-## Subscription Form:
+### Subscription Form:
 
 	Enter Phone Number: ___-___-___.
 	
@@ -32,13 +32,13 @@ Heroku is used for hosting the application.
 	
 	Unsubscribe to all notifications.
 
-## Availability Page:
+### Availability Page:
 
 	5 mile butte is available for the following dates:
 	
 		List all rows in the availability database
 
-## Back-end Logic:
+### Back-end Logic:
 
 	Set the DATE from which to begin searching.
 
@@ -63,16 +63,16 @@ Heroku is used for hosting the application.
 			send NOTAVAILABLE alert to subscribers of DATE.
 
 
-## DB Schema:
+### DB Schema:
 
-### TABLE SUBSCRIPTIONS:
+#### TABLE SUBSCRIPTIONS:
 
 	ID
 	DATE
 	phone number (STRING)
 	URL
 
-### TABLE AVAILABILITY:
+#### TABLE AVAILABILITY:
 
 	ID
 	Site Name
