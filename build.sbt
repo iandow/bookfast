@@ -1,8 +1,12 @@
+import com.github.play2war.plugin._
+
 name := """play-heroku-seed"""
 
 version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
+  .settings(Play2WarPlugin.play2WarSettings: _*)
+  .settings(Play2WarKeys.servletVersion := "3.1")
 
 scalaVersion := "2.11.1"
 
@@ -25,4 +29,4 @@ libraryDependencies ++= Seq(
 )
 
 
-fork in run := true
+//fork in run := true

@@ -1,15 +1,83 @@
-# play-heroku-seed README
-You can try a deployed instance of the app here: https://afternoon-wildwood-5782.herokuapp.com/
+# README
+You can try a deployed instance of the app here: https://bookfast.herokuapp.com/
 
-This application is meant to make it easier to create a Play application with basic Create, Read, Update and Delete functionality and get it up onto Heroku. Database manipulation is handled by Slick connected to PostgreSQL.
+This application makes it easier to know when campsites, yurts, cabins, etc become available for reservations on 
+recreation.gov. For those sites which are in high demand, this application can be useful to ensure you're the first
+one to know when new dates are made available to be reserved.
 
-## Getting started
+# How does this application work?
+Periodically, this application will screen scrape the availability calendars for the desired sites on recreation.gov. 
+It uses that information to keep track of when dates open up and when reservations have been made. 
 
-You can deploy your own copy of the app on Heroku using this button:
+This application provides a user interface to view availability dates, and subscribe to be notified by SMS instant message when dates open up.
+  
+Availabilities will also be announced on the @mthoodlookouts Twitter account, so rather than subscribe to SMS 
+notifications, users can simply subscribe to notifications to that Twitter account (those notifications would be
+done within the Twitter app).
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+This application is based on the "play-heroku-seed" template provided by Lightspeed (aka Typesafe) as part of the 
+Play Framework. This application uses the Jsoup library for screen scraping, and Akka for running Jsoup tasks. 
+Twitter and Twilio APIs are used for notifications. 
+Database manipulation is handled by Slick connected to PostgreSQL, which is used for keeping track of reserved dates. 
+Heroku is used for hosting the application.  
 
-### Local development on OSX
+
+## Subscription Form:
+
+	Enter Phone Number: ___-___-___.
+	
+	You're subscribed to X notifications:  ___.
+	
+	Subscribe to be notified of availability for date MM/DD/YYYY.
+	
+	Unsubscribe to all notifications.
+
+## Availability Page:
+
+	5 mile butte is available for the following dates:
+	
+		List all rows in the availability database
+
+## Back-end Logic:
+
+	Set the DATE from which to begin searching.
+
+	Query the URL
+	
+		if they're all N, then stop searching and reset the DATE mark to the previous search
+		
+		if there are any A, a or W, then
+		
+			if DATE is not in availbility database, then
+			
+				send AVAILABLE alert
+				
+				save the DATE in the DB
+				
+		for each R or X:
+		
+			if DATE exists in the availability database, then
+			
+				remove that element from the database
+				
+			send NOTAVAILABLE alert to subscribers of DATE.
+
+
+## DB Schema:
+
+### TABLE SUBSCRIPTIONS:
+
+	ID
+	DATE
+	phone number (STRING)
+	URL
+
+### TABLE AVAILABILITY:
+
+	ID
+	Site Name
+	Available Date
+
 #### Database Setup
 - Install PostgreSQL 9.3 Postgres.app is the easiest way: [postgresapp.com](http://postgresapp.com/)
 - [PostgreSQL full documentation](http://www.postgresql.org/docs/9.3/interactive/)

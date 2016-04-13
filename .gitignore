@@ -3,7 +3,7 @@ project/project
 tmp
 .history
 dist
-/.idea
+/.idea*
 /*.iml
 /out
 /.idea_modules
@@ -12,3 +12,10 @@ dist
 /RUNNING_PID
 /.settings
 .DS_Store
+conf/application.conf
+application.log
+latest.dump
+test/
+target/
+project/
+projectFilesBackup/
