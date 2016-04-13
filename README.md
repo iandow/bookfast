@@ -1,3 +1,6 @@
+Bookfast
+=========
+
 # README
 You can try a deployed instance of the app here: https://bookfast.herokuapp.com/
 
@@ -152,6 +155,8 @@ name := """play-heroku-seed"""
 If you modify the application name in the Procfile, make sure you update the application name in build.sbt. If the names do not match, the web process will fail to start on Heroku.
 
 
-### Requests for contribution
-- Documentation and tips for readme
-- Model improvements/refinement
+## License
+
+Bookfast source code is licensed under the Apache License, Version 2.0.
+
+See [Third Party Software](https://github.com/glowroot/glowroot/wiki/Third-Party-Software) for license detail of third party software included in the binary distribution.
