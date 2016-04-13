@@ -1,12 +1,11 @@
 Bookfast
 =========
 
-# README
-You can try a deployed instance of the app here: https://bookfast.herokuapp.com/
-
 This application makes it easier to know when campsites, yurts, cabins, etc become available for reservations on 
 recreation.gov. For those sites which are in high demand, this application can be useful to ensure you're the first
 one to know when new dates are made available to be reserved.
+
+You can try a deployed instance of the app here: https://bookfast.herokuapp.com/
 
 ## How does this application work?
 Periodically, this application will screen scrape the availability calendars for the desired sites on recreation.gov. 
