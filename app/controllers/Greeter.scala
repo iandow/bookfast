@@ -17,7 +17,6 @@
 package controllers
 
 import java.text.SimpleDateFormat
-import java.util
 import java.util.Calendar
 import play.api.Play
 import akka.actor.Actor
@@ -39,6 +38,7 @@ import com.twilio.sdk.resource.factory.MessageFactory;
 import com.twilio.sdk.resource.instance.Message;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import java.util.{ArrayList => JArrayList}
 
 
 /**
@@ -52,7 +52,7 @@ class Greeter extends Actor {
   val token = Play.current.configuration.getString("twilio_token").getOrElse("")
   val from = Play.current.configuration.getString("twilio_number").getOrElse("")
   val client = new TwilioRestClient(sid, token)
-  val params2 = new util.ArrayList[NameValuePair]()
+  val params2 = new JArrayList[NameValuePair]()
   params2.add(new BasicNameValuePair("From", from));
   val messageFactory: SmsFactory = client.getAccount.getSmsFactory
 

@@ -42,6 +42,10 @@ object Application extends Controller {
     Ok(views.html.subscriptions.index(Subscriptions.all))
   }
 
+  def weather = Action {
+    Ok(views.html.weather())
+  }
+
   def showsites = Action {
     var sites = Sites.all
     val formatter = DateTimeFormat.forPattern("MM/dd/yyyy")
@@ -119,5 +123,7 @@ object Application extends Controller {
   // 		Ok(views.html.recreation(doc.select("td[class^=status").toString))
   // 		Ok(views.html.recreation(doc.select("td[class=status r]").toString))
    	}
+
+
 
 }
